@@ -7,10 +7,12 @@ const router = express.Router();
 router.post("/S3", async (req, res) => {
   const body = req.body;
   console.log(body);
-  const expName = body.expName;
+  // params for handle data
   const expData = body.data;
-  const participantGender = body.gender;
   const path = body.path;
+// params for increseExpSubjecytByOne
+  const expName = body.expName;
+  const participantGender = body.gender;
 
   try {
     const bucketRes = await handleData(expData, path);

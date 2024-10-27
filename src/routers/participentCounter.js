@@ -4,10 +4,12 @@ import { kv } from "@vercel/kv";
 const router = express.Router();
 
 router.get("/participantCounter", async (req, res) => {
+  const { gender, exp } = req.query; // Extract gender and exp from query parameters
+  const participantsDict = await kv.get(exp);
   try {
     res.json({
-      maleCounter: await kv.get("maleCounter"),
-      femaleCounter: await kv.get("femaleCounter"),
+      maleCounter: participantsDict.maleCounter,
+      femaleCounter : participantsDict.femaleCounter,
     });
   } catch (error) {
     console.error("Error processing request:", error);
