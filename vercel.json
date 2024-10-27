@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/server.mjs",
+      "src": "src/server.js",
       "use": "@vercel/node"
     },
     {
-      "src": "src/aws_upload.mjs",
+      "src": "src/aws_upload.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/server.mjs",
+      "dest": "src/server.js",
       "headers": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
