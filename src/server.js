@@ -5,7 +5,7 @@ import homeRouter from "./routers/home.js";
 import resetRouter from "./routers/reset.js";
 import updateRouter from "./routers/update.js";
 import bodyParser from "body-parser";
-
+import { showAllKVs,addKeyValueToKVs,deleteKey } from "./KVApi/kvApi.js";
 dotenv.config();
 const app = express();
 const PORT = 3000;
@@ -19,7 +19,7 @@ app.use('/reset',resetRouter);
 app.use('/update',updateRouter);
 
 app.listen(PORT, async () => {
-  console.log(`listening on port ${PORT}`);
+  console.log(`Listening on port ${PORT}`);
+  showAllKVs();
 });
-
 
