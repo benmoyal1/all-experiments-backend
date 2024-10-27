@@ -8,9 +8,7 @@ async function resetCounters() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Add any other headers as needed
       },
-      // Optionally add body if you need to send data in the request
     });
 
     const responseData = await response.json();
