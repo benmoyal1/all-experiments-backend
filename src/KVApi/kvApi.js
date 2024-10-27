@@ -38,4 +38,17 @@ const showAllKVs = async () => {
       console.error('Error deleting key from KV:', error);
     }
   };
-export {showAllKVs,addKeyValueToKVs,deleteKey};
+const increaseExpSubjectByOne =async (exp,gender) =>{
+    const expJson = await kv.get(exp);
+    console.log(`before updating : ${expJson}`)
+    expJson[gender] = expJson[gender] + 1
+    kv.set(exp,expJson);
+    console.log(`after updating : ${expJson}`)
+}
+const resetExpDate = async (exp) =>{
+    const expJson = await kv.get(exp);
+    console.log(`before updating : ${expJson}`)
+    kv.set(exp,{"maleCounter":0,"femaleCounter":0});
+    console.log(`after updating : ${expJson}`)
+    }
+export {resetExpDate,showAllKVs,addKeyValueToKVs,deleteKey,increaseExpSubjectByOne};

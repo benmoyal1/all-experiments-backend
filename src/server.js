@@ -5,7 +5,7 @@ import homeRouter from "./routers/home.js";
 import resetRouter from "./routers/reset.js";
 import updateRouter from "./routers/update.js";
 import bodyParser from "body-parser";
-import { showAllKVs,addKeyValueToKVs,deleteKey } from "./KVApi/kvApi.js";
+import { resetExpDate,showAllKVs,addKeyValueToKVs,deleteKey,increaseExpSubjectByOne } from "./KVApi/kvApi.js";
 dotenv.config();
 const app = express();
 const PORT = 3000;
