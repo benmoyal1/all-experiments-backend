@@ -26,10 +26,7 @@ const showAllKVs = async () => {
       console.error('Error adding key-value to KV:', error);
     }
   };
-const addNewExpData = async (expName) =>{
-  await addKeyValueToKVs(expName,initExpKV);
-  console.log(`added new exp data ${expName}`)
-}
+
   const deleteKey = async (key) => {
     try {
       // Delete the key from Redis
@@ -41,6 +38,13 @@ const addNewExpData = async (expName) =>{
       // Handle any errors that might occur during the key deletion
       console.error('Error deleting key from KV:', error);
     }
+  };
+  
+  // Helper function to add new experiment data
+  const addNewExpData = async (expName) => {
+    const initExpKV = { male: 0, female: 0 }; // Assuming initial structure
+    await addKeyValueToKVs(expName, initExpKV);
+    console.log(`added new exp data for ${expName}`);
   };
   const increaseExpSubjectByOne = async (exp, gender) => {
     let expJson = await kv.get(exp);
