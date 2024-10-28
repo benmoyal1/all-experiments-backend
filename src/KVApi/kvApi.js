@@ -64,10 +64,10 @@ const showAllKVs = async () => {
 
     console.log(`after updating : ${JSON.stringify(expJson)}`);
 };
-const resetExpDate = async (exp) =>{
-    const expJson = await kv.get(exp);
+const resetExpData = async (expName) =>{
+    const expJson = await kv.get(expName);
     console.log(`before updating : ${expJson}`)
-    kv.set(exp,initExpKV);
+    kv.set(expName,initExpKV);
     console.log(`after updating : ${expJson}`)
     }
-export {resetExpDate,showAllKVs,addKeyValueToKVs,deleteKey,increaseExpSubjectByOne};
+export {resetExpData as resetExpDate,showAllKVs,addKeyValueToKVs,deleteKey,increaseExpSubjectByOne};
