@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv";
-
+const initExpKV = {"maleCounter":0,"femaleCounter":0};
 const showAllKVs = async () => {
 // Get all keys
   try {
@@ -16,6 +16,7 @@ const showAllKVs = async () => {
   } catch (error) {
     console.error('Error fetching key-value pairs:', error);
   }}
+
   const addKeyValueToKVs = async (key, value) => {
     try {
       // Store the key-value pair in Redis
@@ -25,7 +26,10 @@ const showAllKVs = async () => {
       console.error('Error adding key-value to KV:', error);
     }
   };
-
+const addNewExpData = async (expName) =>{
+  await addKeyValueToKVs(expName,initExpKV);
+  console.log(`added new exp data ${expName}`)
+}
   const deleteKey = async (key) => {
     try {
       // Delete the key from Redis
@@ -38,17 +42,29 @@ const showAllKVs = async () => {
       console.error('Error deleting key from KV:', error);
     }
   };
-const increaseExpSubjectByOne =async (exp,gender) =>{
-    const expJson = await kv.get(exp);
-    console.log(`before updating : ${expJson}`)
-    expJson[gender] = expJson[gender] + 1
-    kv.set(exp,expJson);
-    console.log(`after updating : ${expJson}`)
-}
+  const increaseExpSubjectByOne = async (exp, gender) => {
+    let expJson = await kv.get(exp);
+
+    if (!expJson) {
+        // Initialize the experiment data if it doesn't exist
+        await addNewExpData(exp);
+        expJson = await kv.get(exp); // Retrieve the newly initialized data
+    }
+
+    console.log(`before updating : ${JSON.stringify(expJson)}`);
+
+    // Update the gender counter
+    expJson[gender] = (expJson[gender] || 0) + 1;
+
+    // Save the updated data back to kv
+    await kv.set(exp, expJson);
+
+    console.log(`after updating : ${JSON.stringify(expJson)}`);
+};
 const resetExpDate = async (exp) =>{
     const expJson = await kv.get(exp);
     console.log(`before updating : ${expJson}`)
-    kv.set(exp,{"maleCounter":0,"femaleCounter":0});
+    kv.set(exp,initExpKV);
     console.log(`after updating : ${expJson}`)
     }
 export {resetExpDate,showAllKVs,addKeyValueToKVs,deleteKey,increaseExpSubjectByOne};
