@@ -46,6 +46,7 @@ async function uploadCsvToS3(dataObj, path) {
 async function handleData(dataObj, path) {
   try {
     return await uploadCsvToS3(dataObj, path);
+    
   } catch (error) {
     console.error("Error uploading file:", error);
     throw error;
