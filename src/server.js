@@ -21,6 +21,5 @@ app.use('/update',updateRouter);
 app.listen(PORT, async () => {
   console.log(`Listening on port ${PORT}`);
   showAllKVs();
-  deleteKey('single-name');
 });
 
