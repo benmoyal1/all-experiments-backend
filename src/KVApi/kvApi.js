@@ -45,7 +45,7 @@ const showAllKVs = async () => {
     await addKeyValueToKVs(expName, initExpKV);
     console.log(`added new exp data for ${expName}`);
   };
-  const increaseExpSubjectByOne = async (expName, gender) => {
+  const increaseExpSubjectByOne = async (expName, genderCounter) => {
     let expJson = await kv.get(expName);
 
     if (!expJson) {
@@ -57,7 +57,7 @@ const showAllKVs = async () => {
     console.log(`before updating : ${JSON.stringify(expJson)}`);
 
     // Update the gender counter
-    expJson[gender] = (expJson[gender] || 0) + 1;
+    expJson[genderCounter] = expJson[genderCounter] + 1;
 
     // Save the updated data back to kv
     await kv.set(expName, expJson);
