@@ -39,20 +39,19 @@ const showAllKVs = async () => {
       console.error('Error deleting key from KV:', error);
     }
   };
-  
+
   // Helper function to add new experiment data
   const addNewExpData = async (expName) => {
-    const initExpKV = { male: 0, female: 0 }; // Assuming initial structure
     await addKeyValueToKVs(expName, initExpKV);
     console.log(`added new exp data for ${expName}`);
   };
-  const increaseExpSubjectByOne = async (exp, gender) => {
-    let expJson = await kv.get(exp);
+  const increaseExpSubjectByOne = async (expName, gender) => {
+    let expJson = await kv.get(expName);
 
     if (!expJson) {
         // Initialize the experiment data if it doesn't exist
-        await addNewExpData(exp);
-        expJson = await kv.get(exp); // Retrieve the newly initialized data
+        await addNewExpData(expName);
+        expJson = await kv.get(expName); // Retrieve the newly initialized data
     }
 
     console.log(`before updating : ${JSON.stringify(expJson)}`);
@@ -61,7 +60,7 @@ const showAllKVs = async () => {
     expJson[gender] = (expJson[gender] || 0) + 1;
 
     // Save the updated data back to kv
-    await kv.set(exp, expJson);
+    await kv.set(expName, expJson);
 
     console.log(`after updating : ${JSON.stringify(expJson)}`);
 };
