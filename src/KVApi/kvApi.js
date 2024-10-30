@@ -1,5 +1,5 @@
 import { kv } from "@vercel/kv";
-const initExpKV = {"maleCounter":0,"femaleCounter":0};
+const initExpKV = {'maleCounter':0,'femaleCounter':0};
 const showAllKVs = async () => {
 // Get all keys
   try {
