@@ -21,7 +21,6 @@ app.use('/update',updateRouter);
 app.listen(PORT, async () => {
   console.log(`Listening on port ${PORT}`);
   await showAllKVs();
-  await resetExpDate('Single-Name-Exp');
   // await showAllKVs();
 });
 
