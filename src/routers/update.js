@@ -1,6 +1,6 @@
 import express from "express";
 import handleData from "../awsApi/aws_upload.js";
-import { increaseExpSubjectByOne } from "../KVApi/kvApi.js";
+import { showAllKVs,increaseExpSubjectByOne } from "../KVApi/kvApi.js";
 const router = express.Router();
 
 
@@ -21,7 +21,7 @@ router.post("/S3", async (req, res) => {
     const setGender =
       participantGender === "male" ? "maleCounter" : "femaleCounter";
     increaseExpSubjectByOne(expName,setGender);
-    res.json(bucketRes);
+    res.json({"Participant data":await showAllKVs()});
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Failed to upload data to S3" });

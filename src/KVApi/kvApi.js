@@ -13,6 +13,7 @@ const showAllKVs = async () => {
     }
 
     console.log('All Key-Value Pairs:', keyValuePairs);
+    return keyValuePairs;
   } catch (error) {
     console.error('Error fetching key-value pairs:', error);
   }}
@@ -41,28 +42,30 @@ const showAllKVs = async () => {
   };
 
   // Helper function to add new experiment data
-  const addNewExpData = async (expName) => {
-    await addKeyValueToKVs(expName, initExpKV);
-    console.log(`added new exp data for ${expName}`);
-  };
   const increaseExpSubjectByOne = async (expName, genderCounter) => {
+    // Retrieve the current data for the experiment
     let expJson = await kv.get(expName);
 
+    // Initialize the experiment data if it doesn't exist
     if (!expJson) {
-        // Initialize the experiment data if it doesn't exist
         await addNewExpData(expName);
-        expJson = await kv.get(expName); // Retrieve the newly initialized data
+        expJson = await kv.get(expName);
     }
 
-    console.log(`before updating : ${JSON.stringify(expJson)}`);
+    console.log(`before updating: ${JSON.stringify(expJson)}`);
 
-    // Update the gender counter
-    expJson[genderCounter] = expJson[genderCounter] + 1;
+    // Ensure the genderCounter exists in the retrieved data
+    if (expJson.hasOwnProperty(genderCounter)) {
+        expJson[genderCounter] += 1;
+    } else {
+        console.warn(`Counter "${genderCounter}" does not exist in experiment "${expName}".`);
+        return;
+    }
 
     // Save the updated data back to kv
     await kv.set(expName, expJson);
 
-    console.log(`after updating : ${JSON.stringify(expJson)}`);
+    console.log(`after updating: ${JSON.stringify(expJson)}`);
 };
 const resetExpData = async (expName) =>{
     const expJson = await kv.get(expName);
